@@ -67,7 +67,7 @@ export const metadata: Metadata = {
   verification: {
     // TODO: 구글 서치콘솔 / 네이버 서치어드바이저 인증 코드 입력
     google: "",
-    other: { "naver-site-verification": "" },
+    other: { "naver-site-verification": "5c81af37436c600efaf18a739772828ae6307e95" },
   },
 };
 
