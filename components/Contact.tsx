@@ -46,9 +46,9 @@ export function Footer() {
   return (
     <footer className="mx-auto max-w-6xl px-4 pb-10 pt-6">
       <div className="flex flex-col items-center justify-between gap-4 border-t border-line pt-8 text-sm text-muted sm:flex-row">
-        <p>© {2026} 김유신. Crafted with Next.js & Motion.</p>
+        <p>© {2026} 김유신.</p>
         <p className="font-mono text-xs tracking-widest">
-          DESIGNED &amp; BUILT FROM SCRATCH
+          kysclient@gmail.com
         </p>
       </div>
     </footer>
