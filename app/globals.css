@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+/* dark mode driven by a `.dark` class on <html> */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* ------------------------------------------------------------------ *
+ *  SEMANTIC TOKENS  (light = default, .dark overrides)
+ * ------------------------------------------------------------------ */
+:root {
+  --bg: #eaecf5;
+  --surface: #ffffff;
+  --surface-2: #f5f6fb;
+  --text: #0e1020;
+  --muted: #5a6076;
+  --line: #e6e8f1;
+  --accent: #3a5bff;
+  --accent-2: #6b86ff;
+  --accent-ink: #ffffff;
+  --blob: #3a5bff;
+  --shadow: 24px 24px 60px rgba(20, 25, 60, 0.12);
+  --grain-opacity: 0.035;
+}
+
+.dark {
+  --bg: #07080d;
+  --surface: #0f111b;
+  --surface-2: #14172447;
+  --text: #eef0f8;
+  --muted: #9298b0;
+  --line: #1d2030;
+  --accent: #5b78ff;
+  --accent-2: #8aa0ff;
+  --accent-ink: #07080d;
+  --blob: #3a5bff;
+  --shadow: 24px 24px 80px rgba(0, 0, 0, 0.55);
+  --grain-opacity: 0.06;
+}
+
+@theme inline {
+  --font-display: var(--font-bricolage), "Times New Roman", serif;
+  --font-sans: var(--font-sora), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, monospace;
+
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-text: var(--text);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-accent-ink: var(--accent-ink);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ------------------------------------------------------------------ *
+ *  BASE
+ * ------------------------------------------------------------------ */
+* {
+  border-color: var(--color-line);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  transition: background-color 0.4s var(--ease-out-expo), color 0.4s var(--ease-out-expo);
+}
+
+@media (min-width: 1024px) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+}
+
+::selection {
+  background-color: var(--accent);
+  color: var(--accent-ink);
+}
+
+::-webkit-scrollbar {
+  width: 11px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border: 3px solid var(--bg);
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--muted);
+}
+
+/* ------------------------------------------------------------------ *
+ *  ATMOSPHERE
+ * ------------------------------------------------------------------ */
+.grain {
+  position: fixed;
+  inset: 0;
+  z-index: 80;
+  pointer-events: none;
+  opacity: var(--grain-opacity);
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 240 240' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.dotgrid {
+  background-image: radial-gradient(var(--line) 1px, transparent 1px);
+  background-size: 26px 26px;
+}
+
+/* ------------------------------------------------------------------ *
+ *  TYPE HELPERS
+ * ------------------------------------------------------------------ */
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.035em;
+  line-height: 0.95;
+}
+
+.label {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.text-balance {
+  text-wrap: balance;
+}
+
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  height: 2px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s var(--ease-out-expo);
+}
+.link-underline:hover::after,
+.link-underline[data-active="true"]::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* ------------------------------------------------------------------ *
+ *  HERO BLOB
+ * ------------------------------------------------------------------ */
+@keyframes blobmorph {
+  0%, 100% { border-radius: 61% 39% 52% 48% / 47% 53% 47% 53%; }
+  33% { border-radius: 40% 60% 38% 62% / 56% 42% 58% 44%; }
+  66% { border-radius: 54% 46% 63% 37% / 38% 61% 39% 62%; }
+}
+.blob {
+  animation: blobmorph 12s ease-in-out infinite;
+}
+
+@keyframes floaty {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-14px); }
+}
+.floaty {
+  animation: floaty 6s ease-in-out infinite;
+}
+
+/* marquee */
+@keyframes marquee {
+  to { transform: translateX(-50%); }
+}
+.marquee-track {
+  animation: marquee 34s linear infinite;
+}
+.marquee-track:hover {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
